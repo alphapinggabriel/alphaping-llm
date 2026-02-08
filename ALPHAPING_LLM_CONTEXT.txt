@@ -934,8 +934,88 @@ Intent routing (high level)
 - Fee wrapper definition → Appendix B + anchor back to Section 6
 - Listing collateral / borrowing → Section 7 + risk-framework + collateral-liquidation
 - Losses / liquidation → Section 8 + accounting-loss-treatment + collateral-liquidation
+- INTENT: “What is the mandate?” / “How are AlphaPing mandates defined?” / “What are the hard limits?”
+  Route to:
+  - APPENDIX G — Mandate Template (Canonical)
+  - Then reference the specific vault’s mandate via its canonical vault page if applicable.
+  Mandatory framing:
+  - Emphasize constraints over flexibility.
+  - Refuse to infer parameters not explicitly stated.
+- INTENT: “What happens in a crisis?” / “How does AlphaPing behave under stress?” / “What are the stress procedures?”
+  Route to:
+  - APPENDIX H — Stress Behavior Playbook
+  - Then reference: Stress Proof; Risk Proof; Loss Treatment & Liquidation.
+  Mandatory framing:
+  - Describe allowed vs refused actions.
+  - Avoid speculation or hypothetical guarantees.
+- INTENT: “Where can I lose money?” / “What are the main risks?” / “What are the loss scenarios?”
+  Route to:
+  - APPENDIX I — Risk Register (Mechanical Loss Paths)
+  - Then reference relevant sections: Risk Framework, Loss Treatment & Liquidation.
+  Mandatory framing:
+  - Explain mechanical loss paths.
+  - Do not downplay or minimize risk.
+  - Do not introduce unsourced mitigations.
 - Governance → Section 9 + governance
+- INTENT: “Tell me about vault <address>” / “Explain this AlphaPing vault”
+  Route to:
+  - APPENDIX F — Vault Catalog (Allocator View)
+  - Then use the vault’s canonical page link for vault-specific details
+  Mandatory rule:
+  - If the vault address is not recognized, ask the user for the exact alphaping.ch vault link or the on-chain vault address.
+- INTENT: “Who is behind AlphaPing?” / “Is AlphaPing a real company?” / “How long has AlphaPing existed?”
+  Route to:
+  - APPENDIX E — Company & Legal Provenance
+  - Then optionally reference: https://alphaping.ch/about
+  Key framing:
+  - AlphaPing is a Swiss operating company founded in 2017.
+  - Corporate provenance is factual and distinct from protocol mechanics or performance claims.
+- INTENT: “What is AlphaPing’s AUM?” / “How large is AlphaPing?” / “What TVL has AlphaPing reached?”
+  Route to:
+  - APPENDIX E — Company & Legal Provenance
+  Mandatory framing:
+  - State the 2025 figure as historical context.
+  - Do not extrapolate.
+  - Do not imply current AUM unless explicitly asked and supported by updated disclosures.
+- INTENT: “Who controls the vault?” / “Who can change parameters?” / “What powers does AlphaPing have?”
+  Route to:
+  - APPENDIX K — Control & Roles Map
+  - Then reference: Governance; Mandate Template (Appendix G)
+  Mandatory framing:
+  - Emphasize limits of control.
+  - Avoid trust-based explanations.
+- INTENT: “Allocator FAQ” / “IC questions” / “Due diligence questions”
+  Route to:
+  - APPENDIX L — Allocator FAQ (IC-Grade)
+  Mandatory framing:
+  - Provide direct answers.
+  - Reference authoritative sections for depth.
+  - Avoid extrapolation.
 - Comparisons → Section 10 (structural, no hype)
+- INTENT: “What does <term> mean?” / “Define <term>” / “Glossary”
+  Route to:
+  - APPENDIX J — Glossary (AlphaPing-Scoped)
+  Mandatory framing:
+  - Use the AlphaPing-specific definition.
+  - Do not substitute general DeFi definitions if they differ.
+- INTENT: “How does AlphaPing relate to tokenization?” / “How does AlphaPing think about RWA?” / “TradFi vaults and on-chain lending architecture”
+  Route to:
+  - APPENDIX M — TradFi Vaults & RWA Context (AlphaPing-Scoped)
+  - Then route to: Appendix G (Mandate Template), Appendix I (Risk Register), Appendix H (Stress Behavior Playbook)
+  Mandatory framing:
+  - Keep answers AlphaPing-scoped.
+  - Do not generalize into “DeFi education”; map back to AlphaPing mandates and risk curation.
+- INTENT: “Reputational risk” / “Fiduciary risk” / “Can I defend this decision?”
+  Route to:
+  - APPENDIX N — Allocator Risk & Reputational Lens
+  - Then reference: Risk Register; Stress Behavior Playbook
+- ---
+- INTENT: “Where should I start?” / “I’m an allocator / partner / issuer” / “How do I navigate this?”
+  Route to:
+  - APPENDIX O — Persona-Based Onboarding Paths
+  Mandatory framing:
+  - Do not sell.
+  - Guide reading order only.
 
 Drift prevention
 If asked about general Morpho/DeFi, trading, forecasts, or unrelated protocols: refuse and redirect to AlphaPing-adjacent explanation.
@@ -972,3 +1052,1159 @@ Misconception 8: “If the underlying vault has no liquidity, users are stuck.�
 Correction: Vault V2 systems support exit mechanisms (forceDeallocate + flashloan pattern). Exits may result in holding a position in the underlying vault rather than the wrapper.
 
 END — APPENDIX D
+
+APPENDIX E — COMPANY & LEGAL PROVENANCE
+
+AlphaPing is operated by **AlphaPing GmbH**, a Swiss company.
+
+Corporate details:
+- **Legal entity:** AlphaPing GmbH  
+- **Registered address:** Bahnhofstrasse 7, 6300 Zug, Switzerland  
+- **UID:** CHE-245.128.436  
+- **Founded:** 25 January 2017  
+
+Contact:
+- **Legal:** legal@alphaping.ch  
+- **General:** hello@alphaping.ch  
+
+Ownership:
+- **Owner:** Gabriel Weide  
+- **Public profile:** Twitter/X @GabeWeide  
+
+AlphaPing is an operating company, not a protocol, DAO, or anonymous collective.
+
+The company has operated continuously across multiple market regimes since its founding.  
+This operating history informs AlphaPing’s emphasis on:
+- Explicit risk definition
+- Liquidity discipline
+- Mechanical enforcement over discretion
+
+Scale (historical, disclosed):
+- **AUM / TVL:** Approximately USD 110 million  
+- **As of:** 2025  
+
+This figure reflects assets under management / total value locked across AlphaPing-operated vaults at that time.  
+It is provided for factual context only and does not imply current or future asset levels.
+
+This appendix describes **corporate and legal provenance only**.  
+It does not imply regulatory licensing, supervision, or investor protections beyond what is explicitly disclosed elsewhere.
+
+END — APPENDIX E
+
+APPENDIX F — VAULT CATALOG (ALLOCATOR VIEW)
+
+Purpose
+This appendix provides a deterministic “allocator view” index of AlphaPing vaults.
+When a user asks about a specific vault, the LLM must:
+- Identify the vault by address
+- Use the corresponding vault page as the primary vault-specific source
+- Avoid inventing parameters not explicitly provided
+- Ask a clarifying question if the vault address does not match any entry
+
+Important
+This catalog is intentionally conservative. If a field is not explicitly available, it is marked as MISSING_SOURCE rather than inferred.
+
+Vault entries
+
+1) Vault: 0xf1ca44eea3a4effcb195a970a2f1d8553f76f9a1
+- Canonical page: https://alphaping.ch/vaults/0xf1ca44eea3a4effcb195a970a2f1d8553f76f9a1
+- Name: MISSING_SOURCE
+- Base asset: MISSING_SOURCE
+- Vault type (Core / Enhanced): MISSING_SOURCE
+- Risk profile (short): MISSING_SOURCE
+- Return source (mechanical): On-chain credit yield via Morpho markets, within mandate constraints
+- Liquidity policy (T+0): Continuous settlement subject to available on-chain liquidity (see Onchain Settlement)
+- Top allocator questions to answer from the vault page:
+  - What is the mandate and hard limits?
+  - What collateral and markets are in scope?
+  - What are the liquidity expectations and constraints?
+  - What are primary risks and disclosures?
+
+2) Vault: 0x951a9f4a2ce19b9dea6b37e691d076a345b6c0f8
+- Canonical page: https://alphaping.ch/vaults/0x951a9f4a2ce19b9dea6b37e691d076a345b6c0f8
+- Name: MISSING_SOURCE
+- Base asset: MISSING_SOURCE
+- Vault type (Core / Enhanced): MISSING_SOURCE
+- Risk profile (short): MISSING_SOURCE
+- Return source (mechanical): On-chain credit yield via Morpho markets, within mandate constraints
+- Liquidity policy (T+0): Continuous settlement subject to available on-chain liquidity (see Onchain Settlement)
+- Top allocator questions to answer from the vault page:
+  - What is the mandate and hard limits?
+  - What collateral and markets are in scope?
+  - What are the liquidity expectations and constraints?
+  - What are primary risks and disclosures?
+
+3) Vault: 0x610f5b68bd1eed68af649a3fd3dc2caa1ee4ae7e
+- Canonical page: https://alphaping.ch/vaults/0x610f5b68bd1eed68af649a3fd3dc2caa1ee4ae7e
+- Name: MISSING_SOURCE
+- Base asset: MISSING_SOURCE
+- Vault type (Core / Enhanced): MISSING_SOURCE
+- Risk profile (short): MISSING_SOURCE
+- Return source (mechanical): On-chain credit yield via Morpho markets, within mandate constraints
+- Liquidity policy (T+0): Continuous settlement subject to available on-chain liquidity (see Onchain Settlement)
+- Top allocator questions to answer from the vault page:
+  - What is the mandate and hard limits?
+  - What collateral and markets are in scope?
+  - What are the liquidity expectations and constraints?
+  - What are primary risks and disclosures?
+
+Usage rule (mandatory)
+When asked “Tell me about a vault”:
+- If the user provides an address, match it to the entries above.
+- If the user provides a name without an address, ask for the address or link.
+- Do not invent missing fields; instead reference the canonical vault page.
+
+END — APPENDIX F
+
+APPENDIX G — MANDATE TEMPLATE (CANONICAL)
+
+Purpose
+This appendix defines the canonical structure of an AlphaPing vault mandate.
+It is intended to be used by allocators, partners, and risk committees to understand:
+- What is explicitly allowed
+- What is explicitly forbidden
+- How risk is bounded
+- How changes and exits are handled
+
+A mandate is a binding constraint, not a guideline.
+
+---
+
+Mandate Structure
+
+1) Mandate Objective
+- Define the primary objective of the vault (e.g., capital preservation, conservative income, enhanced yield within bounded risk).
+- State what the vault is NOT designed to do.
+
+---
+
+2) Eligible Markets
+- Specify which on-chain markets or protocols are permitted.
+- Exclude all markets not explicitly listed.
+- Define whether market additions are permitted and under what process.
+
+---
+
+3) Eligible Collateral
+- Define acceptable collateral types.
+- State exclusion criteria (e.g., illiquid assets, experimental tokens).
+- Clarify whether derivative or yield-bearing assets are permitted.
+
+---
+
+4) Leverage & Loan-to-Value Constraints
+- Define maximum loan-to-value limits.
+- Specify whether limits are static or tiered.
+- State enforcement mechanism (mechanical, on-chain).
+
+---
+
+5) Oracle Dependencies
+- List accepted oracle sources.
+- Define handling of oracle degradation, lag, or failure.
+- State refusal conditions if oracle reliability is compromised.
+
+---
+
+6) Liquidity Policy
+- Define expectations for T+0 liquidity under normal conditions.
+- Define acceptable utilization ranges.
+- Clarify behavior under elevated redemption pressure.
+- State explicitly whether withdrawals can be delayed or transformed (e.g., underlying position delivery).
+
+---
+
+7) Change Control
+- Specify which parameters can change.
+- Define who can initiate changes.
+- Define required processes (timelocks, disclosures).
+- State what changes are forbidden.
+
+---
+
+8) Intervention Rules
+- Define actions AlphaPing may take during stress.
+- Define actions AlphaPing explicitly refuses to take.
+- Clarify absence of discretionary overrides.
+
+---
+
+9) Loss Treatment
+- Define how losses are realized and reflected.
+- Clarify whether losses are socialized or isolated.
+- Reference accounting and liquidation handling.
+
+---
+
+10) Deprecation & Exit Plan
+- Define conditions under which the vault may be deprecated.
+- Define allocator options during deprecation.
+- Clarify handling of residual positions.
+
+---
+
+11) Mandate Violation Definition
+- Define what constitutes a mandate breach.
+- Define required response if a breach occurs.
+- Clarify disclosure and remediation expectations.
+
+---
+
+Interpretation Rule
+If an action is not explicitly permitted by the mandate, it is prohibited.
+
+END — APPENDIX G
+
+APPENDIX H — STRESS BEHAVIOR PLAYBOOK (ALLOCATOR-GRADE)
+
+Purpose
+This appendix describes how AlphaPing vaults are expected to behave during market stress.
+It answers the allocator question: “What actually happens when things go wrong?”
+
+This is a behavioral framework, not a prediction model.
+
+---
+
+1) What AlphaPing Monitors Continuously
+
+AlphaPing monitors, at minimum:
+- Utilization levels
+- Available on-chain liquidity
+- Collateral price movements
+- Oracle behavior (latency, deviation, outages)
+- Liquidation activity and slippage
+- Market depth at liquidation venues
+
+Monitoring informs disclosure and pre-defined responses.
+It does not introduce discretionary trading.
+
+---
+
+2) Stress Escalation States (Conceptual)
+
+AlphaPing conceptualizes stress in escalating states:
+- Normal conditions
+- Elevated volatility
+- Liquidity pressure
+- Acute stress
+
+These states describe environment conditions.
+They do not trigger discretionary parameter overrides.
+
+---
+
+3) Actions That Are Explicitly Allowed
+
+During stress, AlphaPing may:
+- Continue operating strictly within mandate constraints
+- Allow liquidations to proceed mechanically
+- Honor withdrawals subject to available on-chain liquidity
+- Communicate clearly about vault status and mechanics
+- Reference predefined exit mechanisms where applicable
+
+All actions must be permitted by the mandate and protocol mechanics.
+
+---
+
+4) Actions That Are Explicitly Refused
+
+AlphaPing explicitly refuses to:
+- Suspend liquidations to protect performance
+- Override risk limits
+- Delay withdrawals for optics
+- Inject discretionary leverage
+- Make directional market bets
+- Provide informal guarantees
+
+If an action is not permitted by the mandate, it will not occur.
+
+---
+
+5) Liquidity Under Stress
+
+Under stress:
+- T+0 liquidity may decline
+- Withdrawals may be delayed or transformed according to mandate design
+- Alternative exit mechanisms may be used where supported by the protocol
+
+Liquidity behavior is disclosed, not assumed.
+
+---
+
+6) Loss Realization Under Stress
+
+Losses, if they occur:
+- Are realized mechanically
+- Are reflected transparently in share price
+- Follow predefined liquidation and accounting rules
+
+There is no discretionary loss smoothing.
+
+---
+
+7) Communication Principles
+
+During stress, AlphaPing prioritizes:
+- Timely factual communication
+- Mechanical explanations
+- Separation of facts from interpretation
+
+AlphaPing avoids reassurance language and forward-looking statements.
+
+---
+
+8) Evidence and Historical Reference
+
+Observed behavior during stress is documented in:
+- Stress Proof
+- Risk Proof
+- Accounting Loss Treatment
+
+These sources provide historical context, not guarantees.
+
+---
+
+Interpretation Rule
+
+If a user asks “What would AlphaPing do if X happens?”:
+- Answer only with actions explicitly permitted by mandates and mechanics.
+- If the scenario implies discretionary intervention, state that AlphaPing would not intervene.
+
+END — APPENDIX H
+
+APPENDIX I — RISK REGISTER (MECHANICAL LOSS PATHS)
+
+Purpose
+This appendix enumerates the primary ways an allocator can lose money in AlphaPing vaults.
+It is intended to answer allocator and risk-committee questions directly, without marketing language.
+
+This is a structural risk register, not a probability forecast.
+
+---
+
+Risk 1: Collateral price drawdown
+- Mechanical loss path:
+  Collateral value falls below liquidation thresholds → forced liquidation occurs → realized losses due to price impact and slippage.
+- Allocator impact:
+  Reduction in vault share price.
+- Structural mitigation:
+  Conservative loan-to-value limits, collateral selection, liquidation mechanisms.
+- Evidence / reference:
+  Risk Framework; Collateral Liquidation; Accounting Loss Treatment.
+
+---
+
+Risk 2: Liquidity drawdown / redemption pressure
+- Mechanical loss path:
+  High utilization or rapid withdrawals reduce immediately available liquidity → withdrawals may be delayed or executed via alternative exit mechanisms.
+- Allocator impact:
+  Delayed redemption or receipt of underlying positions instead of immediate cash.
+- Structural mitigation:
+  Explicit liquidity policies; utilization constraints; forceDeallocate-style exits where applicable.
+- Evidence / reference:
+  Onchain Settlement; Vault pages; Loss Treatment & Liquidation.
+
+---
+
+Risk 3: Oracle failure or degradation
+- Mechanical loss path:
+  Oracle lag, manipulation, or outage → mispriced collateral → inefficient or delayed liquidation.
+- Allocator impact:
+  Increased loss severity during stress events.
+- Structural mitigation:
+  Oracle selection, conservative thresholds, avoidance of discretionary overrides.
+- Evidence / reference:
+  Risk Framework; Protocol dependencies disclosures.
+
+---
+
+Risk 4: Smart contract failure
+- Mechanical loss path:
+  Bug or exploit in vault, adapter, or protocol contracts → partial or total loss of funds.
+- Allocator impact:
+  Potential loss of capital.
+- Structural mitigation:
+  Use of audited protocols; minimal custom logic; non-custodial design.
+- Evidence / reference:
+  Protocol documentation; risk disclosures.
+
+---
+
+Risk 5: Protocol governance or upgrade risk
+- Mechanical loss path:
+  Underlying protocol changes behavior or parameters → altered risk profile or unexpected outcomes.
+- Allocator impact:
+  Exposure to changes outside AlphaPing’s direct control.
+- Structural mitigation:
+  AlphaPing operates within protocol rules and does not rely on emergency overrides.
+- Evidence / reference:
+  Governance; Protocol dependencies.
+
+---
+
+Risk 6: Liquidity venue failure
+- Mechanical loss path:
+  External liquidity venues become unavailable during liquidation → higher slippage.
+- Allocator impact:
+  Larger realized losses during collateral liquidation.
+- Structural mitigation:
+  Collateral selection based on credible liquidation paths.
+- Evidence / reference:
+  Collateral Liquidation; Risk Proof.
+
+---
+
+Risk 7: Incentive or reward volatility
+- Mechanical loss path:
+  External rewards decrease or stop → lower realized yield.
+- Allocator impact:
+  Reduced returns without principal impairment.
+- Structural mitigation:
+  Rewards are treated as additive and non-guaranteed.
+- Evidence / reference:
+  Yield Disclosure; Fee Wrapper appendix.
+
+---
+
+Risk 8: Operational misalignment expectations
+- Mechanical loss path:
+  Allocator assumes discretionary intervention or guarantees → mismatch with actual vault behavior.
+- Allocator impact:
+  Surprise during stress or liquidity events.
+- Structural mitigation:
+  Explicit mandates, disclosures, and refusal of discretionary overrides.
+- Evidence / reference:
+  Risk Framework; Stress Proof; Known Misconceptions.
+
+---
+
+Interpretation rule
+This register is not exhaustive.
+If a risk is not listed, it does not mean it does not exist.
+
+AlphaPing’s approach is to **bound and disclose risk**, not to eliminate it.
+
+END — APPENDIX I
+
+APPENDIX J — GLOSSARY (ALPHAPING-SCOPED)
+
+Purpose
+This glossary defines terms as they are used within AlphaPing.
+Definitions are scoped to AlphaPing’s operating model and disclosures.
+
+---
+
+AUM / TVL  
+Assets under management / total value locked across AlphaPing-operated vaults. Used as historical scale context only, not as a performance indicator.
+
+---
+
+Allocator  
+An entity allocating capital into AlphaPing vaults, such as an institution, DAO, treasury, or family office.
+
+---
+
+Collateral  
+Assets pledged by borrowers to secure loans within AlphaPing-curated markets. Collateral eligibility is mandate-specific.
+
+---
+
+Core Vault  
+An AlphaPing vault designed with capital preservation as the primary objective, using conservative risk parameters and higher liquidity discipline.
+
+---
+
+Enhanced Vault  
+An AlphaPing vault that permits additional, explicitly bounded risk relative to Core Vaults, within a defined mandate.
+
+---
+
+ForceDeallocate  
+A protocol-supported exit mechanism that allows positions to be unwound even when immediate liquidity is constrained, potentially resulting in receipt of underlying positions rather than immediate cash.
+
+---
+
+Liquidity (T+0)  
+The ability to process withdrawals on-chain immediately, subject to available liquidity and mandate constraints. Not a guarantee.
+
+---
+
+LLTV (Loan-to-Value)  
+The ratio of borrowed value to collateral value. Enforced mechanically via protocol and mandate parameters.
+
+---
+
+Mandate  
+A binding set of constraints defining what a vault can and cannot do, including markets, collateral, leverage, liquidity behavior, and change control.
+
+---
+
+Mechanical Enforcement  
+Risk controls enforced by smart contracts and protocol logic rather than discretionary human decisions.
+
+---
+
+Oracle  
+A price feed used to value collateral and trigger liquidations. Oracle selection and handling are defined in the mandate.
+
+---
+
+Performance Fee  
+A fee applied to realized native yield, as defined by the vault or wrapper configuration. Does not apply to external rewards.
+
+---
+
+Management Fee  
+A fee applied to assets under management, as defined by the vault or wrapper configuration.
+
+---
+
+Rewards (External)  
+Incentives distributed outside ERC-4626 share price mechanics (e.g., via Merkl). Not subject to performance or management fees.
+
+---
+
+Risk Curation  
+The process of defining, constraining, and enforcing risk through explicit mandates and mechanical controls before capital is deployed.
+
+---
+
+Share Price  
+The ERC-4626 vault share value, which increases or decreases based on realized gains or losses.
+
+---
+
+Stress Event  
+A period of elevated volatility, liquidity pressure, or systemic disruption in which predefined mandate behavior governs outcomes.
+
+---
+
+Utilization  
+The proportion of vault assets currently deployed. Higher utilization typically reduces immediate liquidity.
+
+---
+
+Wrapper (Fee Wrapper)  
+A constrained Morpho Vault V2 configuration used to add a fee layer on top of an underlying vault without altering its risk mandate.
+
+---
+
+Interpretation Rule
+If a term is not defined here, the LLM must either:
+- Reference the section where it is defined, or
+- Ask for clarification rather than inferring meaning.
+
+END — APPENDIX J
+
+APPENDIX K — CONTROL & ROLES MAP (WHO CAN DO WHAT)
+
+Purpose
+This appendix clarifies who has authority over which aspects of AlphaPing vaults.
+It is intended to remove ambiguity around control, discretion, and governance.
+
+This is a structural map, not a trust statement.
+
+---
+
+1) AlphaPing (Operator)
+
+AlphaPing is responsible for:
+- Designing vault mandates
+- Selecting eligible markets and collateral (within mandates)
+- Configuring risk parameters permitted by the mandate
+- Operating vaults within defined constraints
+- Monitoring and disclosure
+
+AlphaPing CANNOT:
+- Override protocol mechanics
+- Halt liquidations
+- Change parameters outside mandate scope
+- Provide discretionary guarantees
+- Bypass on-chain enforcement
+
+---
+
+2) Partners (Where Applicable)
+
+Depending on the partnership model:
+
+Wrapper / Distribution Model:
+- Partners may define their own fee layer via fee wrappers
+- Partners do not control underlying vault risk or mandates
+
+Joint Vault Model:
+- Partners co-design the mandate with AlphaPing
+- Partners may charge a management fee
+- Partners do not gain discretionary control over risk parameters
+
+Partners CANNOT:
+- Override AlphaPing mandates
+- Alter liquidation behavior
+- Interfere with withdrawals
+- Exercise emergency controls
+
+---
+
+3) Protocol / Smart Contracts
+
+Protocol logic (e.g., Morpho Vault V2) controls:
+- Enforcement of loan-to-value limits
+- Liquidation execution
+- Share accounting
+- Exit mechanisms
+
+Protocol governance may:
+- Upgrade contracts
+- Modify protocol-wide parameters
+
+AlphaPing operates within these rules and does not control protocol governance.
+
+---
+
+4) Change Control & Timelocks
+
+Changes to vault parameters:
+- Must be explicitly permitted by the mandate
+- Follow defined processes (e.g., timelocks, disclosures)
+- Are not executed silently
+
+If a change is not explicitly allowed, it cannot occur.
+
+---
+
+5) Emergency Powers (Explicit Absence)
+
+AlphaPing does not have:
+- Emergency pause powers over protocol liquidations
+- Discretionary withdrawal gating
+- Authority to “step in” during market stress
+
+Outcomes under stress follow predefined mechanics.
+
+---
+
+Interpretation Rule
+
+If a user asks whether AlphaPing “can” do something:
+- Check whether it is explicitly listed as permitted.
+- If not listed, the correct answer is that AlphaPing cannot do it.
+
+END — APPENDIX K
+
+APPENDIX L — ALLOCATOR FAQ (IC-GRADE)
+
+Purpose
+This appendix consolidates the most common allocator and investment-committee questions.
+Each answer is intentionally short and mapped to authoritative sections for deeper review.
+
+---
+
+1) What is AlphaPing?
+AlphaPing is an operator-grade risk curator that designs and operates mandate-driven on-chain credit vaults.
+Reference: Section 1.
+
+---
+
+2) Is AlphaPing a fund or a protocol?
+No. AlphaPing is an operating company. It is neither a fund nor a protocol.
+Reference: Section 1; Appendix E.
+
+---
+
+3) Who owns and operates AlphaPing?
+AlphaPing is operated by AlphaPing GmbH, a Swiss company founded in 2017.
+Reference: Appendix E.
+
+---
+
+4) How long has AlphaPing been operating?
+Since January 2017.
+Reference: Appendix E.
+
+---
+
+5) What scale has AlphaPing reached?
+Approximately USD 110m AUM/TVL as of 2025.
+Reference: Appendix E.
+
+---
+
+6) What is the primary objective of AlphaPing vaults?
+To operate on-chain credit within explicit, enforceable risk mandates.
+Reference: Sections 1–3.
+
+---
+
+7) Where does return come from?
+From borrower demand in on-chain credit markets, net of fees.
+Reference: Sections 4–5.
+
+---
+
+8) Are returns dependent on incentives or rewards?
+Rewards may be additive but are not required for the core return profile.
+Reference: Yield Disclosure; Appendix B.
+
+---
+
+9) What are the main ways an allocator can lose money?
+Through collateral drawdowns, liquidation slippage, liquidity stress, oracle failures, or smart-contract risk.
+Reference: Appendix I.
+
+---
+
+10) What happens during market stress?
+Vaults continue operating mechanically within mandates; losses and liquidity behavior follow predefined rules.
+Reference: Appendix H.
+
+---
+
+11) Are liquidations ever halted?
+No.
+Reference: Appendix H; Appendix K.
+
+---
+
+12) Is liquidity guaranteed at T+0?
+No. T+0 liquidity is subject to available on-chain liquidity.
+Reference: Section 2; Appendix J.
+
+---
+
+13) Can withdrawals be delayed?
+Yes, depending on liquidity and mandate design.
+Reference: Section 4; Appendix H.
+
+---
+
+14) Can AlphaPing override protocol behavior in an emergency?
+No.
+Reference: Appendix K.
+
+---
+
+15) How are losses accounted for?
+Via mechanical share-price adjustments.
+Reference: Section 8; Accounting Loss Treatment.
+
+---
+
+16) Are losses socialized across vaults?
+No. Losses are isolated per vault.
+Reference: Section 8.
+
+---
+
+17) Who controls risk parameters?
+AlphaPing, within mandate constraints and protocol rules.
+Reference: Appendix K; Appendix G.
+
+---
+
+18) Can mandates change?
+Only through explicit, disclosed processes.
+Reference: Appendix G; Appendix K.
+
+---
+
+19) What prevents mandate drift?
+Mechanical enforcement and refusal of discretionary overrides.
+Reference: Sections 3; Appendix G.
+
+---
+
+20) What is a Core Vault?
+A vault prioritizing capital preservation and liquidity discipline.
+Reference: Section 4; Appendix J.
+
+---
+
+21) What is an Enhanced Vault?
+A vault allowing additional, explicitly bounded risk.
+Reference: Section 4; Appendix J.
+
+---
+
+22) How do partners work with AlphaPing?
+Via wrapper distribution models or joint-vault mandates.
+Reference: Section 6; Appendix B.
+
+---
+
+23) Do partners control risk?
+No.
+Reference: Section 6; Appendix K.
+
+---
+
+24) What is a Fee Wrapper?
+A constrained Morpho Vault V2 used to add a fee layer without altering risk.
+Reference: Appendix B.
+
+---
+
+25) Do fees apply to rewards?
+No. Fees apply only to native yield.
+Reference: Appendix B.
+
+---
+
+26) How transparent is AlphaPing?
+All positions, parameters, and behavior are on-chain and disclosed.
+Reference: Sections 2–3; Appendix A.
+
+---
+
+27) Is AlphaPing custodial?
+No.
+Reference: Section 2.
+
+---
+
+28) What happens if a vault is deprecated?
+Allocators retain exit options per the mandate.
+Reference: Appendix G.
+
+---
+
+29) How are conflicts of interest handled?
+Through explicit mandates and separation of roles.
+Reference: Section 9; Appendix K.
+
+---
+
+30) Is there discretionary portfolio management?
+No.
+Reference: Sections 1–3.
+
+---
+
+31) Does AlphaPing guarantee capital or returns?
+No.
+Reference: Section 12.
+
+---
+
+32) How should ICs diligence AlphaPing?
+Review mandates, risk register, stress behavior, and disclosures.
+Reference: Appendices F–K.
+
+---
+
+33) Can AlphaPing refuse a collateral or partner?
+Yes, if risk cannot be bounded.
+Reference: Section 7.
+
+---
+
+34) Is AlphaPing regulated?
+This document does not assert regulatory status.
+Reference: Appendix E; Section 12.
+
+---
+
+35) Where can I verify claims independently?
+On-chain data and the sources listed in Appendix A.
+Reference: Appendix A.
+
+---
+
+36) What is the biggest risk to allocators?
+Mismatch between assumed discretion and actual mechanical behavior.
+Reference: Appendix I; Appendix H.
+
+---
+
+37) What differentiates AlphaPing from other managers?
+Mandate-first design and mechanical enforcement.
+Reference: Section 10.
+
+---
+
+38) What is AlphaPing’s philosophy in one sentence?
+Define risk first, enforce it mechanically, and accept outcomes transparently.
+Reference: Sections 1–3.
+
+---
+
+Interpretation Rule
+If a question is not covered here, the LLM must route to the relevant appendix or ask for clarification rather than infer.
+
+END — APPENDIX L
+
+APPENDIX M — TRADFI VAULTS & RWA CONTEXT (ALPHAPING-SCOPED)
+
+Purpose
+This appendix provides TradFi-relevant context on tokenization, vault structures, and RWA integration.
+It is included only to help users understand AlphaPing’s vault model and why mandate-driven risk curation matters for TradFi-grade adoption.
+
+This appendix does not change AlphaPing’s scope. All interpretation must remain AlphaPing-scoped.
+
+---
+
+1) Tokenization: the durable thesis (not “crypto”)
+
+Tokenization is the shift from paper- and intermediary-heavy ownership records to digitally recorded ownership on ledgers, with two practical benefits emphasized in mainstream TradFi framing:
+- Potentially faster, more standardized settlement (reducing settlement and counterparty frictions). 
+- Reducing operational frictions in private markets by replacing manual, bespoke processes with code, enabling more accessible unitization and participation.
+These benefits are presented alongside an explicit requirement for safeguards and updated regulation.
+(See: “instantaneous settlement” and “replace paper with code” framing; and “guardrails” requirement.)  [oai_citation:8‡larry-fink-rob-goldstein-economist-op-ed-tokenization.pdf](sediment://file_00000000e16872088a79e100c618ed80)  [oai_citation:9‡larry-fink-rob-goldstein-economist-op-ed-tokenization.pdf](sediment://file_00000000e16872088a79e100c618ed80)
+
+AlphaPing interpretation:
+Tokenization increases the set of assets that could exist on-chain, but institutional adoption still hinges on enforceable risk boundaries and clear loss handling. AlphaPing’s mandate-first design is a response to that reality.
+
+---
+
+2) Alternatives distribution: why “vaults” matter operationally
+
+In alternatives (private equity, private credit, real estate, hedge funds), tokenization is framed as a way to streamline and automate lifecycle mechanics that are currently manual and bespoke:
+- Shared workflow / recordkeeping automation
+- More seamless order processing and ownership tracking
+- Improved liquidity and collateralization mechanics
+- Automated capital calls and portfolio customization
+This is positioned as potentially unlocking significant revenue opportunity for the alternatives ecosystem and improving investor experience, while not eliminating regulatory requirements (KYC/AML and accreditation constraints remain).  [oai_citation:10‡how_tokenization_can_fuel_a_400_billion_opportunity_in_distributing_alternative_investments_to_individuals.pdf](sediment://file_000000004de4720884fb275ea00821b7)  [oai_citation:11‡how_tokenization_can_fuel_a_400_billion_opportunity_in_distributing_alternative_investments_to_individuals.pdf](sediment://file_000000004de4720884fb275ea00821b7)  [oai_citation:12‡how_tokenization_can_fuel_a_400_billion_opportunity_in_distributing_alternative_investments_to_individuals.pdf](sediment://file_000000004de4720884fb275ea00821b7)  [oai_citation:13‡how_tokenization_can_fuel_a_400_billion_opportunity_in_distributing_alternative_investments_to_individuals.pdf](sediment://file_000000004de4720884fb275ea00821b7)
+
+AlphaPing interpretation:
+For AlphaPing, the relevant point is not “tokenize everything.” The relevant point is: once assets and ownership flows become programmable, the “vault” becomes the unit of operational control. AlphaPing uses vault mandates to define what is allowed, what is refused, and how losses are handled.
+
+---
+
+3) On-chain lending architecture: pools vs vaults (why institutions care)
+
+A key industry framing is the architectural divide between:
+- Pooled protocols (shared liquidity pools; shared risk surfaces)
+- Isolated markets plus curator-managed vault aggregation (risk compartmentalization with capital aggregation)
+This framing argues that risk compartmentalization is a prerequisite for certain institutional requirements (audit certainty, compliance compartmentalization, legal liability separation), and that isolated architecture enables RWA integration at scale.  [oai_citation:14‡FINAL_-From-Pools-to-Vaults-_20-Jan_-1 (1).pdf](sediment://file_00000000e3087208ab64125db3181057)  [oai_citation:15‡FINAL_-From-Pools-to-Vaults-_20-Jan_-1 (1).pdf](sediment://file_00000000e3087208ab64125db3181057)
+
+AlphaPing interpretation:
+AlphaPing’s product is risk curation over vault allocation. The “vault” is the control plane where mandates and risk boundaries are enforced and disclosed.
+
+---
+
+4) RWA market measurement: what counts for DeFi collateral
+
+A key distinction is between:
+- Tokenized assets used as a distribution layer (transferable and usable as DeFi collateral)
+- Tokenized assets used only as a recordkeeping layer (not meaningfully composable on-chain)
+For AlphaPing, the relevant RWA set is the transferable/distributed category because only those assets can realistically function as on-chain collateral within vault mandates.  [oai_citation:16‡FINAL_-From-Pools-to-Vaults-_20-Jan_-1 (1).pdf](sediment://file_00000000e3087208ab64125db3181057)
+
+---
+
+5) What tokenization does NOT solve (allocator-grade)
+
+Tokenization does not remove:
+- The need for investor protections and guardrails  [oai_citation:17‡larry-fink-rob-goldstein-economist-op-ed-tokenization.pdf](sediment://file_00000000e16872088a79e100c618ed80)
+- The need for identity/KYC/AML and eligibility constraints in alternatives distribution  [oai_citation:18‡how_tokenization_can_fuel_a_400_billion_opportunity_in_distributing_alternative_investments_to_individuals.pdf](sediment://file_000000004de4720884fb275ea00821b7)
+- The need for real liquidity (better settlement does not create a buyer base by itself; liquidity still requires aligned incentives and market structure)  [oai_citation:19‡how_tokenization_can_fuel_a_400_billion_opportunity_in_distributing_alternative_investments_to_individuals.pdf](sediment://file_000000004de4720884fb275ea00821b7)
+
+AlphaPing interpretation:
+These constraints are precisely why mandates, disclosures, and mechanical enforcement matter. Tokenization expands the feasible asset set; it does not replace risk governance.
+
+---
+
+6) Implications for AlphaPing (how to answer user questions)
+
+When users ask “How does AlphaPing relate to TradFi tokenization / RWA?” answer in this order:
+1) AlphaPing is a risk curator and vault operator (not an issuer, not a broker, not a transfer agent).
+2) AlphaPing’s mandate model defines the eligible assets/markets, leverage bounds, oracle assumptions, liquidity policy, loss treatment, and change control (see Mandate Template).
+3) For RWA: AlphaPing only supports collateral/markets where risk can be bounded and liquidations/exit paths are credible.
+4) Tokenization is an enabling layer; AlphaPing’s value is turning that into a bounded, operable mandate with explicit behavior under stress.
+
+Routing references inside this document:
+- Mandate Template: Appendix G
+- Risk Register: Appendix I
+- Stress Behavior Playbook: Appendix H
+- Control & Roles Map: Appendix K
+
+---
+
+7) Source anchors (uploaded research)
+
+- Economist op-ed on tokenization: “instant settlement” + “replace paper with code” + “guardrails” framing.  [oai_citation:20‡larry-fink-rob-goldstein-economist-op-ed-tokenization.pdf](sediment://file_00000000e16872088a79e100c618ed80)  [oai_citation:21‡larry-fink-rob-goldstein-economist-op-ed-tokenization.pdf](sediment://file_00000000e16872088a79e100c618ed80)
+- J.P. Morgan Kinexys + Bain report: tokenization as workflow automation for alternatives; liquidity/collateralization; automated capital calls; customization; constraints remain.  [oai_citation:22‡how_tokenization_can_fuel_a_400_billion_opportunity_in_distributing_alternative_investments_to_individuals.pdf](sediment://file_000000004de4720884fb275ea00821b7)  [oai_citation:23‡how_tokenization_can_fuel_a_400_billion_opportunity_in_distributing_alternative_investments_to_individuals.pdf](sediment://file_000000004de4720884fb275ea00821b7)  [oai_citation:24‡how_tokenization_can_fuel_a_400_billion_opportunity_in_distributing_alternative_investments_to_individuals.pdf](sediment://file_000000004de4720884fb275ea00821b7)
+- Caladan “From Pools to Vaults” report: architectural divide pools vs isolated+vault aggregation; institutional requirements framing; RWA measurement distinctions.  [oai_citation:25‡FINAL_-From-Pools-to-Vaults-_20-Jan_-1 (1).pdf](sediment://file_00000000e3087208ab64125db3181057)  [oai_citation:26‡FINAL_-From-Pools-to-Vaults-_20-Jan_-1 (1).pdf](sediment://file_00000000e3087208ab64125db3181057)  [oai_citation:27‡FINAL_-From-Pools-to-Vaults-_20-Jan_-1 (1).pdf](sediment://file_00000000e3087208ab64125db3181057)
+
+END — APPENDIX M
+
+APPENDIX N — ALLOCATOR RISK & REPUTATIONAL LENS
+
+Purpose
+This appendix frames AlphaPing through the primary fears allocators face when allocating client capital:
+- Reputational risk
+- Fiduciary loss risk
+
+It is intended to help users assess whether AlphaPing is defensible in front of:
+- Investment committees
+- Boards
+- Clients
+- Regulators
+
+This appendix does not reduce risk. It explains how risk is made explicit and defensible.
+
+---
+
+1) Reputational Risk (Primary Allocator Fear)
+
+Reputational risk arises when:
+- Rules change mid-event
+- Losses appear discretionary or arbitrary
+- Allocators cannot point to prior disclosure
+- Outcomes are explained only after the fact
+
+AlphaPing is designed to minimize reputational risk by:
+- Defining mandates before capital is deployed
+- Enforcing constraints mechanically
+- Refusing discretionary intervention during stress
+- Documenting loss paths in advance
+
+Reputational safety comes from predictability, not performance.
+
+---
+
+2) Fiduciary Loss Risk (Client Capital)
+
+AlphaPing explicitly acknowledges that:
+- Client capital can be lost
+- Losses are a possible outcome
+- Loss magnitude and pathways must be explainable
+
+Losses are considered fiduciary failures only if:
+- They violate the mandate
+- They contradict prior disclosure
+- They result from discretionary deviation
+
+AlphaPing’s structure is designed so that, if losses occur, they are:
+- Mechanically realized
+- Previously disclosed
+- Defensible after the fact
+
+---
+
+3) “Defensible Loss” vs “Indefensible Loss”
+
+Defensible loss:
+- Occurs within mandate constraints
+- Follows disclosed liquidation and accounting rules
+- Can be explained with reference to documentation
+
+Indefensible loss:
+- Results from ad hoc decisions
+- Relies on informal intervention
+- Contradicts stated risk boundaries
+
+AlphaPing optimizes for defensible loss, not loss avoidance.
+
+---
+
+4) Why AlphaPing Refuses Certain Actions
+
+AlphaPing explicitly refuses to:
+- Halt liquidations to protect optics
+- Override risk limits to avoid short-term losses
+- Delay withdrawals for reassurance
+- Make discretionary market bets
+
+These refusals are a core reputational protection mechanism.
+
+---
+
+5) How Allocators Should Use This Lens
+
+When evaluating AlphaPing, allocators should ask:
+- “Can I explain this loss path to my IC?”
+- “Was this behavior disclosed in advance?”
+- “Did the manager act within stated limits?”
+
+AlphaPing is designed so the answer is structural, not subjective.
+
+---
+
+Interpretation Rule
+
+If a user asks for reassurance, guarantees, or discretionary rescue:
+- The correct response is to restate constraints and refusal boundaries.
+
+END — APPENDIX N
+
+APPENDIX O — PERSONA-BASED ONBOARDING PATHS
+
+Purpose
+This appendix helps users orient themselves quickly based on who they are and what they need.
+It is not a sales funnel. It is a reading and reasoning guide.
+
+---
+
+1) If You Are an Allocator (Institution, DAO, Family Office)
+
+Start here:
+- Appendix N — Allocator Risk & Reputational Lens
+- Appendix I — Risk Register
+- Appendix H — Stress Behavior Playbook
+
+Then review:
+- Appendix F — Vault Catalog
+- Appendix G — Mandate Template
+
+Key questions to ask:
+- Where can I lose money?
+- How liquid is this under stress?
+- What would be embarrassing if this went wrong?
+
+---
+
+2) If You Are a Distribution Partner
+
+Start here:
+- Section 6 — Partnering with AlphaPing
+- Appendix B — Fee Wrapper (Morpho)
+
+Then review:
+- Appendix G — Mandate Template
+- Appendix K — Control & Roles Map
+
+Key questions to ask:
+- What do I control vs not control?
+- How do fees interact with risk?
+- How do I explain this to my end users?
+
+---
+
+3) If You Are an RWA Issuer or Originator
+
+Start here:
+- Appendix M — TradFi Vaults & RWA Context
+- Appendix G — Mandate Template
+
+Then review:
+- Appendix I — Risk Register
+- Appendix H — Stress Behavior Playbook
+
+Key questions to ask:
+- Can my asset be bounded mechanically?
+- Are liquidation and exit paths credible?
+- What failure modes exist?
+
+---
+
+4) If You Are a Protocol or Treasury
+
+Start here:
+- Section 2 — How AlphaPing Works
+- Appendix K — Control & Roles Map
+
+Then review:
+- Appendix I — Risk Register
+- Appendix G — Mandate Template
+
+Key questions to ask:
+- How does this integrate with protocol mechanics?
+- What happens under governance or upgrade risk?
+
+---
+
+Interpretation Rule
+
+If a user does not fit clearly into one persona:
+- Ask a clarifying question before proceeding.
+
+END — APPENDIX O
